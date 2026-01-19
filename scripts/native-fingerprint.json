@@ -1,0 +1,16 @@
+{
+  "nativeDependencies": [
+    "expo-live-activity",
+    "expo-notifications",
+    "expo-updates",
+    "expo-local-authentication",
+    "react-native-reanimated",
+    "react-native-gesture-handler"
+  ],
+  "nativePaths": [
+    "ios/",
+    "android/",
+    "plugins/",
+    "app.config.ts"
+  ]
+}

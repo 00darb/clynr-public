@@ -1,0 +1,17 @@
+functions:
+  single_responsibility: true
+  max_lines: 30
+
+naming:
+  boolean_prefixes:
+    - is
+    - has
+    - can
+    - should
+
+errors:
+  swallow_exceptions: false
+  require_context: true
+
+tests:
+  behaviour_based: true

@@ -1,0 +1,47 @@
+import fs from "fs"
+import path from "path"
+
+const REQUIRED_FILES = [
+  "README_AI.md",
+  "docs/ENGINEERING_STANDARD.md",
+  "docs/engineering_rules.yaml",
+  "ai/ROLE.md",
+  "ai/REVIEW_PROTOCOL.md",
+  "shared/api-contracts/README.md"
+]
+
+const root = process.cwd()
+
+const missingFiles = REQUIRED_FILES.filter(file =>
+  !fs.existsSync(path.join(root, file))
+)
+
+if (missingFiles.length > 0) {
+  console.error("\n❌ AI / API STANDARDS VERIFICATION FAILED\n")
+  console.error("Missing required files:\n")
+  missingFiles.forEach(f => console.error(`- ${f}`))
+  console.error("\nBuild aborted.\n")
+  process.exit(1)
+}
+
+/* ---- API CONTRACT ENFORCEMENT ---- */
+
+const contractsDir = path.join(root, "shared/api-contracts")
+
+if (!fs.existsSync(contractsDir)) {
+  console.error("\n❌ API CONTRACTS DIRECTORY MISSING\n")
+  console.error("Expected: shared/api-contracts/\n")
+  process.exit(1)
+}
+
+const contractFiles = fs
+  .readdirSync(contractsDir)
+  .filter(f => f.endsWith(".ts"))
+
+if (contractFiles.length === 0) {
+  console.error("\n❌ NO API CONTRACT FILES FOUND\n")
+  console.error("Add at least one *.contract.ts file in shared/api-contracts/\n")
+  process.exit(1)
+}
+
+console.log("✅ AI standards and API contracts verified successfully")
